@@ -1,4 +1,4 @@
-1. (a)
+1.1.1 (a)
 ivanvolkov@Ivans-MacBook-Air:~$ id
 uid=501(ivanvolkov) gid=20(staff) groups=20(staff),701(com.apple.sharepoint.group.1),12(everyone),61(localaccounts),79(_appserverusr),80(admin),81(_appserveradm),98(_lpadmin),702(com.apple.sharepoint.group.2),33(_appstore),100(_lpoperator),204(_developer),250(_analyticsusers),395(com.apple.access_ftp),398(com.apple.access_screensharing),399(com.apple.access_ssh)
     (b)
@@ -35,3 +35,58 @@ ivanvolkov@Ivans-MacBook-Air:~$ ls -a
 .ServiceHub/          .bashrc               .ghc/                 .mono/                .subversion/          .viminfo              .ycm_extra_conf.py    Music/
 .Trash/               .cache/               .gitconfig            .oracle_jre_usage/    .swm                  .vimrc                Applications/         Pictures/
 .Xauthority           .clangd/              .idea/                .p2/                  .swn                  .vimrc.save           DawnOfMan/            Public/
+
+1.1.2
+    (a)
+!!!!
+Комментарии к выводу terminala указаны после // в конце некоторых строк
+!!!!
+ivanvolkov@Ivans-MacBook-Air:~$ ls -l /dev
+total 0
+crw-------  1 root        wheel           19,   1 Sep 10 09:24 afsc_type5        //первый символ - с => Character special file (файл из чаров)
+crw-------  1 ivanvolkov  staff            0,   0 Sep 10 09:24 console
+...
+crw-rw-rw-  1 root        wheel           18,   1 Sep 10 09:24 cu.Bluetooth-Incoming-Port
+brw-r-----  1 root        operator         1,   0 Sep 10 09:24 disk0              //первый символ - b => Block special file. ()
+brw-r-----  1 root        operator         1,   1 Sep 10 09:24 disk0s1
+...
+dr-xr-xr-x  1 root        wheel                 0 Sep 10 09:24 fd/                //первый символ - d => directory (папка)
+    
+    (b)
+
+ivanvolkov@Ivans-MacBook-Air:~$ file /dev/afsc_type5
+/dev/afsc_type5: character special (19/1)
+ivanvolkov@Ivans-MacBook-Air:~$ file /dev/disk0
+/dev/disk0: block special (1/0)
+ivanvolkov@Ivans-MacBook-Air:~$ file /dev/fd
+/dev/fd: directory
+Ровно те же самые результаты: afsc_type5 - файл чаров, /dev/disk0 - block special, /dev/fd - папка
+
+    (c)
+Первый - исполняемый файл, Второй - acsii текст (пруф:)
+
+ivanvolkov@Ivans-MacBook-Air:~$ file /sbin/ifconfig
+/sbin/ifconfig: Mach-O 64-bit executable x86_64
+
+ivanvolkov@Ivans-MacBook-Air:~$ file /etc/hosts
+/etc/hosts: ASCII text
+
+    (d)
+
+sda1 отсутсвтует для sdt:
+ivanvolkov@Ivans-MacBook-Air:~$ file /dev/sdt
+/dev/sdt: character special (0/0)
+ivanvolkov@Ivans-MacBook-Air:~$ file -s /dev/sdt
+^C (повис)
+
+Выводы: надо было ставить linux
+
+    (e)
+У мака такого нет, вроде ему соответствует /usr/bin/sysctl, терминал говорит, что это бинарник:
+ivanvolkov@Ivans-MacBook-Air:~$ file /usr/sbin/sysctl
+/usr/sbin/sysctl: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x86_64] [i386:Mach-O executable i386]
+/usr/sbin/sysctl (for architecture x86_64):	Mach-O 64-bit executable x86_64
+/usr/sbin/sysctl (for architecture i386):	Mach-O executable i386
+
+    (f)
+в Маке такого нет, говорят что +- аналог это папка /Library/LaunchAgents/, там лежат файлы .plist, file говорит что это ascii text
