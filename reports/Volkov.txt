@@ -72,24 +72,19 @@ ivanvolkov@Ivans-MacBook-Air:~$ file /etc/hosts
 /etc/hosts: ASCII text
 
     (d)
+просто file выдает "block special", file -s выдает 
+DOS/MBR boot sector, code offset 0x58+2, OEM-ID "mkfs.fat", sectors/cluster 8, Media descriptor 0xf8, sectors/track 63, heads 255, hidden sectors 2048, sectors 1048576 (volumes > 32 MB), FAT (32 bit), sectors/FAT 1024, reserved 0x1, serial number 0x3e603431, unlabeled
 
-sda1 отсутсвтует на Мак, если подставить вместо него sdt:
-ivanvolkov@Ivans-MacBook-Air:~$ file /dev/sdt
-/dev/sdt: character special (0/0)
-ivanvolkov@Ivans-MacBook-Air:~$ file -s /dev/sdt
-^C (повис)
-
-Выводы: Файл, видимо, набор чаров, но надо было ставить linux
+Видимо (в частности из man file), просто file видит только как сохранена информация в файле, а file -s, обладая бОльшими правами (потребовал sudo), просматривает сам файл и может узнать что-то дополнительное про него
 
     (e)
-У мака такого нет, вроде ему соответствует /usr/bin/sysctl, терминал говорит, что это бинарник:
-ivanvolkov@Ivans-MacBook-Air:~$ file /usr/sbin/sysctl
-/usr/sbin/sysctl: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x86_64] [i386:Mach-O executable i386]
-/usr/sbin/sysctl (for architecture x86_64):	Mach-O 64-bit executable x86_64
-/usr/sbin/sysctl (for architecture i386):	Mach-O executable i386
+
+просто file выдает "empty", file -s выдает "ASCII text, with very long lines", du говорит, что размер файла 0, так что видимо это пустой файл про который тем не менее записано, какого типа информацию он должен хранить
 
     (f)
-в Маке такого нет, говорят что +- аналог это папка /Library/LaunchAgents/, там лежат файлы .plist, file говорит что это ascii text
+
+    Для файлов из  /etc/init.d/ stat говорит, что они "regular file", а file - что они "POSIX shell script, ASCII text executable", то есть какие-то скрипты
+    Вывод: stat не такой мощный как file(???)
 
 1.1.3
     (a)
