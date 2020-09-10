@@ -1,0 +1,37 @@
+1. (a)
+ivanvolkov@Ivans-MacBook-Air:~$ id
+uid=501(ivanvolkov) gid=20(staff) groups=20(staff),701(com.apple.sharepoint.group.1),12(everyone),61(localaccounts),79(_appserverusr),80(admin),81(_appserveradm),98(_lpadmin),702(com.apple.sharepoint.group.2),33(_appstore),100(_lpoperator),204(_developer),250(_analyticsusers),395(com.apple.access_ftp),398(com.apple.access_screensharing),399(com.apple.access_ssh)
+    (b)
+ivanvolkov@Ivans-MacBook-Air:~$ date
+Thu Sep 10 10:15:52 MSK 2020
+    (c)
+ivanvolkov@Ivans-MacBook-Air:~$ pwd
+/Users/ivanvolkov
+    (d)
+ivanvolkov@Ivans-MacBook-Air:~$ ls
+Applications/         Desktop/              Downloads/            Movies/               Pictures/             PycharmProjects/      tinkoff_haskell_2020/
+DawnOfMan/            Documents/            Library/              Music/                Public/               VirtualBox VMs/
+ivanvolkov@Ivans-MacBook-Air:~$ ls -l
+total 0
+drwx------@   5 ivanvolkov  staff   160B Jun  7 14:44 Applications/
+drwxr-xr-x    7 ivanvolkov  staff   224B Mar 30 23:55 DawnOfMan/
+drwx------+  57 ivanvolkov  staff   1.8K Sep 10 09:56 Desktop/
+drwx------+  23 ivanvolkov  staff   736B Sep  4 22:14 Documents/
+drwx------+ 464 ivanvolkov  staff    15K Sep 10 10:04 Downloads/
+drwx------@  86 ivanvolkov  staff   2.7K Sep  4 22:14 Library/
+drwx------+   8 ivanvolkov  staff   256B Jul  2 21:18 Movies/
+drwx------+   7 ivanvolkov  staff   224B Jul 28  2019 Music/
+drwx------+   9 ivanvolkov  staff   288B Apr 23 11:51 Pictures/
+drwxr-xr-x+   6 ivanvolkov  staff   192B May  3  2019 Public/
+drwxr-xr-x    9 ivanvolkov  staff   288B Jun 11  2019 PycharmProjects/
+drwxr-xr-x    4 ivanvolkov  staff   128B Jan  7  2020 VirtualBox VMs/
+drwxr-xr-x   15 ivanvolkov  staff   480B May 14 12:36 tinkoff_haskell_2020/
+ivanvolkov@Ivans-MacBook-Air:~$ ls -a
+./                    .android/             .config/              .ideavimrc            .pylint.d/            .swo                  .vimrc.save.1         Desktop/              PycharmProjects/
+../                   .bash_history         .cups/                .idlerc/              .python_history       .swp                  .wget-hsts            Documents/            VirtualBox VMs/
+.CFUserTextEncoding   .bash_profile         .cvspass              .lesshst              .rnd                  .templateengine/      .wine/                Downloads/            tinkoff_haskell_2020/
+.DS_Store             .bash_profile.pysave  .emacs.d/             .local/               .sheepshaver_prefs    .tkcon_history        .wine-old/            Library/
+.IdentityService/     .bash_sessions/       .gdbinit              .matplotlib/          .stack/               .vim/                 .wing101-6@           Movies/
+.ServiceHub/          .bashrc               .ghc/                 .mono/                .subversion/          .viminfo              .ycm_extra_conf.py    Music/
+.Trash/               .cache/               .gitconfig            .oracle_jre_usage/    .swm                  .vimrc                Applications/         Pictures/
+.Xauthority           .clangd/              .idea/                .p2/                  .swn                  .vimrc.save           DawnOfMan/            Public/
