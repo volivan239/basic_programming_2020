@@ -73,13 +73,13 @@ ivanvolkov@Ivans-MacBook-Air:~$ file /etc/hosts
 
     (d)
 
-sda1 отсутсвтует для sdt:
+sda1 отсутсвтует на Мак, если подставить вместо него sdt:
 ivanvolkov@Ivans-MacBook-Air:~$ file /dev/sdt
 /dev/sdt: character special (0/0)
 ivanvolkov@Ivans-MacBook-Air:~$ file -s /dev/sdt
 ^C (повис)
 
-Выводы: надо было ставить linux
+Выводы: Файл, видимо, набор чаров, но надо было ставить linux
 
     (e)
 У мака такого нет, вроде ему соответствует /usr/bin/sysctl, терминал говорит, что это бинарник:
@@ -90,3 +90,69 @@ ivanvolkov@Ivans-MacBook-Air:~$ file /usr/sbin/sysctl
 
     (f)
 в Маке такого нет, говорят что +- аналог это папка /Library/LaunchAgents/, там лежат файлы .plist, file говорит что это ascii text
+
+1.1.3
+    (a)
+mkdir /var/tmp/test, mkdir /var/tmp/test/mytest, cd /var/tmp/test/mytest делают ровно это
+    (b)
+touch a.txt, touch b.txt, touch c.txt, file классифицирует их как "empty"
+    (c)
+ivanvolkov@Ivans-MacBook-Air:/var/tmp/test/mytest$ ls -l -t
+total 8
+-rw-r--r--  1 ivanvolkov  wheel   213B Sep 10 12:51 hosts
+-rw-r--r--  1 ivanvolkov  wheel     0B Sep 10 12:50 c.txt
+-rw-r--r--  1 ivanvolkov  wheel     0B Sep 10 12:50 b.txt
+-rw-r--r--  1 ivanvolkov  wheel     0B Sep 10 12:50 a.txt
+    (d)
+в каталоге осталось 3 пустых файла - c.txt, b.txt и hosts
+    (e)
+остался только файл hosts
+    (f)
+cp -R . ~/tmp
+    (g)
+rm hosts
+    (e)
+cd ../.., rm -r test
+    (i)
+cd ~/tmp
+    (j)
+touch digits.txt, записал цифры, cat выводит:
+
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ cat digits.txt
+0123456789
+
+как сделать то же самое через echo - не понял (echo не хочет принимать файлы на вход)
+
+    (k)
+cat digits.txt digits.txt >digits2.txt
+    (l)
+как сделать быстро - не понял, пришлось создавать промежуточные digits8.txt и digits32.txt
+
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ cat digits2.txt digits2.txt digits2.txt digits2.txt >digits8.txt
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ cat digits8.txt digits8.txt digits8.txt digits8.txt >digits32.txt
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ cat digits32.txt digits32.txt digits.txt >digits65.txt
+
+    (m)
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ wc digits65.txt
+      65      65     780 digits65.txt - действительно 65 строк
+
+    (n)
+head -n 5 /etc/passwd >a.txt и tail -n 5 /etc/passwd >b.txt, затем cat a.txt и cat b.txt выдают следующее:
+
+##
+# User Database
+#
+# Note that this file is consulted directly only when the system is running
+# in single-user mode.  At other times this information is provided by
+
+_cmiodalassistants:*:262:262:CoreMedia IO Assistants User:/var/db/cmiodalassistants:/usr/bin/false
+_analyticsd:*:263:263:Analytics Daemon:/var/db/analyticsd:/usr/bin/false
+_fpsd:*:265:265:FPS Daemon:/var/db/fpsd:/usr/bin/false
+_timed:*:266:266:Time Sync Daemon:/var/db/timed:/usr/bin/false
+_reportmemoryexception:*:269:269:ReportMemoryException:/var/db/reportmemoryexception:/usr/bin/false
+
+    (o)
+ls -l /etc/ >c.txt
+    (p)
+ wc c.txt, выдает что там 117 строк (каждый файл там записан на отдельной строке)
+
