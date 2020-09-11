@@ -154,5 +154,5 @@ _reportmemoryexception:*:269:269:ReportMemoryException:/var/db/reportmemoryexcep
     (o)
 ls -l /etc/ >c.txt
     (p)
- wc c.txt, выдает что там 117 строк (каждый файл там записан на отдельной строке)
+ wc c.txt, выдает что там 117 строк (каждый файл там записан на отдельной строке) => в каталоге также должно быть 117 файлов.
 
