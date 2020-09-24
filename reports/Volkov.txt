@@ -1,0 +1,153 @@
+1.1.1 (a)
+ivanvolkov@Ivans-MacBook-Air:~$ id
+uid=501(ivanvolkov) gid=20(staff) groups=20(staff),701(com.apple.sharepoint.group.1),12(everyone),61(localaccounts),79(_appserverusr),80(admin),81(_appserveradm),98(_lpadmin),702(com.apple.sharepoint.group.2),33(_appstore),100(_lpoperator),204(_developer),250(_analyticsusers),395(com.apple.access_ftp),398(com.apple.access_screensharing),399(com.apple.access_ssh)
+    (b)
+ivanvolkov@Ivans-MacBook-Air:~$ date
+Thu Sep 10 10:15:52 MSK 2020
+    (c)
+ivanvolkov@Ivans-MacBook-Air:~$ pwd
+/Users/ivanvolkov
+    (d)
+ivanvolkov@Ivans-MacBook-Air:~$ ls
+Applications/         Desktop/              Downloads/            Movies/               Pictures/             PycharmProjects/      tinkoff_haskell_2020/
+DawnOfMan/            Documents/            Library/              Music/                Public/               VirtualBox VMs/
+ivanvolkov@Ivans-MacBook-Air:~$ ls -l
+total 0
+drwx------@   5 ivanvolkov  staff   160B Jun  7 14:44 Applications/
+drwxr-xr-x    7 ivanvolkov  staff   224B Mar 30 23:55 DawnOfMan/
+drwx------+  57 ivanvolkov  staff   1.8K Sep 10 09:56 Desktop/
+drwx------+  23 ivanvolkov  staff   736B Sep  4 22:14 Documents/
+drwx------+ 464 ivanvolkov  staff    15K Sep 10 10:04 Downloads/
+drwx------@  86 ivanvolkov  staff   2.7K Sep  4 22:14 Library/
+drwx------+   8 ivanvolkov  staff   256B Jul  2 21:18 Movies/
+drwx------+   7 ivanvolkov  staff   224B Jul 28  2019 Music/
+drwx------+   9 ivanvolkov  staff   288B Apr 23 11:51 Pictures/
+drwxr-xr-x+   6 ivanvolkov  staff   192B May  3  2019 Public/
+drwxr-xr-x    9 ivanvolkov  staff   288B Jun 11  2019 PycharmProjects/
+drwxr-xr-x    4 ivanvolkov  staff   128B Jan  7  2020 VirtualBox VMs/
+drwxr-xr-x   15 ivanvolkov  staff   480B May 14 12:36 tinkoff_haskell_2020/
+ivanvolkov@Ivans-MacBook-Air:~$ ls -a
+./                    .android/             .config/              .ideavimrc            .pylint.d/            .swo                  .vimrc.save.1         Desktop/              PycharmProjects/
+../                   .bash_history         .cups/                .idlerc/              .python_history       .swp                  .wget-hsts            Documents/            VirtualBox VMs/
+.CFUserTextEncoding   .bash_profile         .cvspass              .lesshst              .rnd                  .templateengine/      .wine/                Downloads/            tinkoff_haskell_2020/
+.DS_Store             .bash_profile.pysave  .emacs.d/             .local/               .sheepshaver_prefs    .tkcon_history        .wine-old/            Library/
+.IdentityService/     .bash_sessions/       .gdbinit              .matplotlib/          .stack/               .vim/                 .wing101-6@           Movies/
+.ServiceHub/          .bashrc               .ghc/                 .mono/                .subversion/          .viminfo              .ycm_extra_conf.py    Music/
+.Trash/               .cache/               .gitconfig            .oracle_jre_usage/    .swm                  .vimrc                Applications/         Pictures/
+.Xauthority           .clangd/              .idea/                .p2/                  .swn                  .vimrc.save           DawnOfMan/            Public/
+
+1.1.2
+    (a)
+!!!!
+Комментарии к выводу terminala указаны после // в конце некоторых строк
+!!!!
+ivanvolkov@Ivans-MacBook-Air:~$ ls -l /dev
+total 0
+crw-------  1 root        wheel           19,   1 Sep 10 09:24 afsc_type5        //первый символ - с => Character special file (файл из чаров)
+crw-------  1 ivanvolkov  staff            0,   0 Sep 10 09:24 console
+...
+crw-rw-rw-  1 root        wheel           18,   1 Sep 10 09:24 cu.Bluetooth-Incoming-Port
+brw-r-----  1 root        operator         1,   0 Sep 10 09:24 disk0              //первый символ - b => Block special file. ()
+brw-r-----  1 root        operator         1,   1 Sep 10 09:24 disk0s1
+...
+dr-xr-xr-x  1 root        wheel                 0 Sep 10 09:24 fd/                //первый символ - d => directory (папка)
+    
+    (b)
+
+ivanvolkov@Ivans-MacBook-Air:~$ file /dev/afsc_type5
+/dev/afsc_type5: character special (19/1)
+ivanvolkov@Ivans-MacBook-Air:~$ file /dev/disk0
+/dev/disk0: block special (1/0)
+ivanvolkov@Ivans-MacBook-Air:~$ file /dev/fd
+/dev/fd: directory
+Ровно те же самые результаты: afsc_type5 - файл чаров, /dev/disk0 - block special, /dev/fd - папка
+
+    (c)
+Первый - исполняемый файл, Второй - acsii текст (пруф:)
+
+ivanvolkov@Ivans-MacBook-Air:~$ file /sbin/ifconfig
+/sbin/ifconfig: Mach-O 64-bit executable x86_64
+
+ivanvolkov@Ivans-MacBook-Air:~$ file /etc/hosts
+/etc/hosts: ASCII text
+
+    (d)
+просто file выдает "block special", file -s выдает 
+DOS/MBR boot sector, code offset 0x58+2, OEM-ID "mkfs.fat", sectors/cluster 8, Media descriptor 0xf8, sectors/track 63, heads 255, hidden sectors 2048, sectors 1048576 (volumes > 32 MB), FAT (32 bit), sectors/FAT 1024, reserved 0x1, serial number 0x3e603431, unlabeled
+
+Видимо (в частности из man file), просто file видит только как сохранена информация в файле, а file -s, обладая бОльшими правами (потребовал sudo), просматривает сам файл и может узнать что-то дополнительное про него
+
+    (e)
+
+просто file выдает "empty", file -s выдает "ASCII text, with very long lines", du говорит, что размер файла 0, так что видимо это пустой файл про который тем не менее записано, какого типа информацию он должен хранить
+
+    (f)
+
+    Для файлов из  /etc/init.d/ stat говорит, что они "regular file", а file - что они "POSIX shell script, ASCII text executable", то есть какие-то скрипты
+    Вывод: stat не такой мощный как file(???)
+
+1.1.3
+    (a)
+mkdir /var/tmp/test, mkdir /var/tmp/test/mytest, cd /var/tmp/test/mytest делают ровно это
+    (b)
+touch a.txt, touch b.txt, touch c.txt, file классифицирует их как "empty"
+    (c)
+ivanvolkov@Ivans-MacBook-Air:/var/tmp/test/mytest$ ls -l -t
+total 8
+-rw-r--r--  1 ivanvolkov  wheel   213B Sep 10 12:51 hosts
+-rw-r--r--  1 ivanvolkov  wheel     0B Sep 10 12:50 c.txt
+-rw-r--r--  1 ivanvolkov  wheel     0B Sep 10 12:50 b.txt
+-rw-r--r--  1 ivanvolkov  wheel     0B Sep 10 12:50 a.txt
+    (d)
+в каталоге осталось 3 пустых файла - c.txt, b.txt и hosts
+    (e)
+остался только файл hosts
+    (f)
+cp -R . ~/tmp
+    (g)
+rm hosts
+    (e)
+cd ../.., rm -r test
+    (i)
+cd ~/tmp
+    (j)
+touch digits.txt, записал цифры, cat выводит:
+
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ cat digits.txt
+0123456789
+
+как сделать то же самое через echo - не понял (echo не хочет принимать файлы на вход)
+
+    (k)
+cat digits.txt digits.txt >digits2.txt
+    (l)
+как сделать быстро - не понял, пришлось создавать промежуточные digits8.txt и digits32.txt
+
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ cat digits2.txt digits2.txt digits2.txt digits2.txt >digits8.txt
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ cat digits8.txt digits8.txt digits8.txt digits8.txt >digits32.txt
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ cat digits32.txt digits32.txt digits.txt >digits65.txt
+
+    (m)
+ivanvolkov@Ivans-MacBook-Air:~/tmp$ wc digits65.txt
+      65      65     780 digits65.txt - действительно 65 строк
+
+    (n)
+head -n 5 /etc/passwd >a.txt и tail -n 5 /etc/passwd >b.txt, затем cat a.txt и cat b.txt выдают следующее:
+
+##
+# User Database
+#
+# Note that this file is consulted directly only when the system is running
+# in single-user mode.  At other times this information is provided by
+
+_cmiodalassistants:*:262:262:CoreMedia IO Assistants User:/var/db/cmiodalassistants:/usr/bin/false
+_analyticsd:*:263:263:Analytics Daemon:/var/db/analyticsd:/usr/bin/false
+_fpsd:*:265:265:FPS Daemon:/var/db/fpsd:/usr/bin/false
+_timed:*:266:266:Time Sync Daemon:/var/db/timed:/usr/bin/false
+_reportmemoryexception:*:269:269:ReportMemoryException:/var/db/reportmemoryexception:/usr/bin/false
+
+    (o)
+ls -l /etc/ >c.txt
+    (p)
+ wc c.txt, выдает что там 117 строк (каждый файл там записан на отдельной строке) => в каталоге также должно быть 117 файлов.
+
