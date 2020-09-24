@@ -1,13 +1,17 @@
 @file: JvmName("main")
 
-fun qsort(arr: List <Int>): List <Int> {
-    if (arr.size <= 1)
-        return arr
-    val x = arr[0]
-    val left = qsort(arr.filter {it < x})
-    val mid = arr.filter {it == x}
-    val right = qsort(arr.filter {it > x})
+fun qsort(list: List <Int>): List <Int> {
+    if (list.size <= 1)
+        return list
+    val x = list[0]
+    val left = qsort(list.filter {it < x})
+    val mid = list.filter {it == x}
+    val right = qsort(list.filter {it > x})
     return left + mid + right
+}
+
+fun reverse(list: List<Int>): List <Int> {
+    return list.foldRight(emptyList<Int>()) {elem, lst -> lst + elem}
 }
 
 fun main() {

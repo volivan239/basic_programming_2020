@@ -25,4 +25,14 @@ internal class mainTest {
         val expected = listOf<Int>(-20, 0, 0, 1, 3, 5, 7, 20)
         assertEquals(expected, qsort(list))
     }
+    @Test
+    fun reverseEmpty() {
+        assertEquals(emptyList<Int>(), reverse(emptyList<Int>()))
+    }
+    @Test
+    fun reverseRandom() {
+        val list = listOf<Int>(1, 2, 3, 4, 5)
+        val expected = listOf<Int>(1, 2, 3, 4, 5)
+        assertEquals(expected, list)
+    }
 }
