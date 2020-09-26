@@ -9,9 +9,12 @@ fun calcFibonacci(n: Int): Int {
 }
 
 fun main() {
+    println("Enter positive integer")
     val s = readLine()
     if (s == null || s.toIntOrNull() == null || s.toInt() <= 0)
         println("$s is not a valid number!")
-    else
-        println(calcFibonacci(s.toInt()))
+    else {
+        val n = s.toInt()
+        println("$n-th Fibonacci number is ${calcFibonacci(n)}")
+    }
 }

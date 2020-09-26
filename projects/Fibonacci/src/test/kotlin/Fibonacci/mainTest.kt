@@ -7,13 +7,19 @@ import org.junit.jupiter.api.Assertions.*
 internal class mainTest {
 
     @Test
-    fun calcFibonacci() {
-        assertEquals(55, calcFibonacci(10))
-        assertEquals(6765, calcFibonacci(20))
-        assertEquals(2, calcFibonacci(3))
-        assertEquals(1, calcFibonacci(2))
+    fun calcFibonacci1st() {
         assertEquals(1, calcFibonacci(1))
-        assertEquals(13, calcFibonacci(7))
+    }
+    @Test
+    fun calcFibonacci10th() {
+        assertEquals(55, calcFibonacci(10))
+    }
+    @Test
+    fun calcFibonacci20th() {
+        assertEquals(6765, calcFibonacci(20))
+    }
+    @Test
+    fun calcFibonacci8th() {
         assertEquals(21, calcFibonacci(8))
     }
 }
