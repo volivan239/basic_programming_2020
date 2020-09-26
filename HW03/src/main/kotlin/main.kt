@@ -11,7 +11,15 @@ fun qsort(list: List <Int>): List <Int> {
 }
 
 fun reverse(list: List<Int>): List <Int> {
-    return list.foldRight(emptyList<Int>()) {elem, lst -> lst + elem}
+    return list.foldRight(emptyList<Int>()) {elem, list -> list + elem}
+}
+
+fun <T> List<T>.filterWithFold(f: (T)->Boolean): List<T> {
+    return this.fold(emptyList<T>()) {list, elem -> if (f(elem)) list + elem else list}
+}
+
+fun <T> List<T>.filterWithFoldRight(f: (T)->Boolean): List<T> {
+    return this.foldRight(emptyList<T>()) {elem, lst -> if (f(elem)) listOf(elem) + lst else lst}
 }
 
 fun main() {

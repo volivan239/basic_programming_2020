@@ -35,4 +35,24 @@ internal class mainTest {
         val expected = listOf<Int>(1, 2, 3, 4, 5)
         assertEquals(expected, list)
     }
+    @Test
+    fun filterFold() {
+        var a = listOf("a", "aba", "abacaba", "ax", "abc")
+        assertEquals(a.filter { it.length > 2 }, a.filterWithFold { it.length > 2 })
+    }
+    @Test
+    fun filterFoldEmpty() {
+        var a = listOf(0, 1, 2, 3)
+        assertEquals(a.filterWithFold{it < 0}, emptyList<Int>())
+    }
+    @Test
+    fun filterFoldRight() {
+        var a = listOf("a", "aba", "abacaba", "ax", "abc")
+        assertEquals(a.filter { it.length > 2 }, a.filterWithFoldRight { it.length > 2 })
+    }
+    @Test
+    fun filterFoldRightEmpty() {
+        var a = listOf(0, 1, 2, 3)
+        assertEquals(emptyList<Int>(), a.filterWithFoldRight{it < 0})
+    }
 }
