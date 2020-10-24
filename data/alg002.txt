@@ -1,5 +1,5 @@
 # Returns number increased by one
-zero x 5 else 2
+zero x 5 else 2   // Special for case when initial value is 0
 inc y
 dec x
 zero x 5 else 2

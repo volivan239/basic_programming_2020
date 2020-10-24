@@ -1,5 +1,5 @@
 // Applies instruction and returns true if it was "STOP"
-fun go(state: State, instruction: Instruction): Boolean {
+fun runInstruction(state: State, instruction: Instruction): Boolean {
     return when (instruction) {
         is Instruction.STOP -> true
         is Instruction.DEC  -> {
@@ -22,12 +22,12 @@ fun go(state: State, instruction: Instruction): Boolean {
     }
 }
 
-// Runs algo one one initial value
-fun run(instructions: List<Instruction>, initial: Int): Int {
+// Runs algorithm one one initial value
+fun runAlgorithm(algorithm: List<Instruction>, initial: Int): Int {
     val state = State(1, Variables(initial, 0, 0))
-    while (state.counter < instructions.size && !go(state, instructions[state.counter])) {
-        if (state.counter <= 0 || state.counter > instructions.size)
-            throw Exception("Reference to incorrect pc - ${state.counter}")
+    while (state.counter < algorithm.size && !runInstruction(state, algorithm[state.counter])) {
+        if (state.counter <= 0 || state.counter > algorithm.size)
+            throw Exception("Reference to incorrect program counter - ${state.counter}")
     }
     return state.variables.y
 }

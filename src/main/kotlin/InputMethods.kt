@@ -17,8 +17,8 @@ fun parseInstruction(line: String): Instruction {
     }
 }
 
-// Reads instruction from given File
-fun readInstructions(file: File): List <Instruction> {
+// Reads algorithm from given File
+fun readAlgorithm(file: File): List <Instruction> {
     val lines = file.readLines().filterNot { it == "" || it.startsWith("#") }
     try {
         return listOf(Instruction.STOP) + lines.map { parseInstruction(it) }

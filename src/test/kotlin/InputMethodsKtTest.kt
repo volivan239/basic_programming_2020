@@ -32,8 +32,8 @@ internal class InputMethodsKtTest {
     }
 
     @Test
-    fun readInstructions() {
-        val actual = readInstructions(File("data/alg002.txt"))
+    fun readAlgorithm() {
+        val actual = readAlgorithm(File("data/alg002.txt"))
         val expected = listOf(
             Instruction.STOP,
             Instruction.ZERO("x", 5, 2),

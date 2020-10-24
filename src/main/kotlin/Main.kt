@@ -49,26 +49,26 @@ sealed class Instruction {
 }
 
 // Runs algorithm on one initial value
-fun processQuery(initial: String, instructions: List<Instruction>) {
+fun processQuery(initial: String, algorithm: List<Instruction>) {
+    println("For initial value $initial:")
     if (initial.toIntOrNull() == null || initial.toInt() < 0) {
         println("$initial is not a correct initial value, skipping")
         return
     }
-    println("For initial value $initial")
     try {
-        println("Result: ${run(instructions, initial.toInt())}")
+        println("Result: ${runAlgorithm(algorithm, initial.toInt())}\n")
     } catch (e: Exception) {
-        println("Run-time error: ${e.message}")
+        println("Run-time error: ${e.message}\n")
     }
 }
 
 fun main(args: Array <String>) {
     val files = args.map { File(it) }.filter { it.isFile }
     if (files.size != 2) {
-        println("Expected exectly 2 files but ${files.size} got:")
+        println("Expected exactly 2 files but ${files.size} got:")
         files.forEach { println(it.name) }
     }
-    val instructions = readInstructions(files[0])
-    println(instructions.size)
-    files[1].readLines().filterNot {it == "" }.forEach { processQuery(it, instructions) }
+    val algorithm = readAlgorithm(files[0])
+    printAlgorithm(algorithm)
+    files[1].readLines().filterNot {it == "" }.forEach { processQuery(it, algorithm) }
 }
