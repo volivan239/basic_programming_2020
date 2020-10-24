@@ -1,7 +1,8 @@
 import java.io.File
 import kotlin.system.exitProcess
 
-fun readInstruction(line: String): Instruction {
+// Parses one instruction to Instruction class
+fun parseInstruction(line: String): Instruction {
     val lexems = line.split(" ").filterNot { it == "" }
     return when (lexems[0]) {
         "stop" -> Instruction.STOP
@@ -16,10 +17,11 @@ fun readInstruction(line: String): Instruction {
     }
 }
 
-fun readInstructions(fileName: String): List <Instruction> {
-    val lines = File(fileName).readLines().filterNot { it == "" || it.startsWith("#") }
+// Reads instruction from given File
+fun readInstructions(file: File): List <Instruction> {
+    val lines = file.readLines().filterNot { it == "" || it.startsWith("#") }
     try {
-        return listOf(Instruction.STOP) + lines.map { readInstruction(it) }
+        return listOf(Instruction.STOP) + lines.map { parseInstruction(it) }
     } catch (e: Exception) {
         println(e.message)
         exitProcess(0)
