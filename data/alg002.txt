@@ -1,0 +1,7 @@
+# Returns number increased by one
+zero x 5 else 2
+inc y
+dec x
+zero x 5 else 2
+inc y
+stop
