@@ -27,3 +27,17 @@ fun readAlgorithm(file: File): List <Instruction> {
         exitProcess(0)
     }
 }
+
+fun readQueries(file: File): List <Pair<Int, Int>> {
+    val lines = file.readLines().filterNot { it == "" || it.startsWith("#") }
+    val res = mutableListOf<Pair<Int, Int>>()
+    for (line in lines) {
+        try {
+            val lexems = line.split(" ").filterNot { it == "" }.map { it.toInt() }
+            res.add(Pair(lexems[0], lexems[1]))
+        } catch (e: Exception) {
+            println("$line - not a correct query, skipping")
+        }
+    }
+    return res
+}

@@ -1,8 +1,9 @@
 import java.io.File
-import kotlin.math.max
+import kotlin.math.*
 
 // Stores variables' values
 data class Variables(var x: Int = 0, var y: Int = 0, var z: Int = 0) {
+
     // Returns value of $variableName variable
     fun get(variableName: String): Int {
         return when (variableName) {
@@ -14,31 +15,25 @@ data class Variables(var x: Int = 0, var y: Int = 0, var z: Int = 0) {
     }
 
     // Sets value of $variableName variable to $newVal
-    fun set(variableName: String, newVal: Int) {
+    fun set(variableName: String, newVal: Int): Variables {
         if (newVal < 0) {
             throw Exception("Inccorrect value - $newVal")
         }
-        when (variableName) {
-            "x" -> x = newVal
-            "y" -> y = newVal
-            "z" -> z = newVal
+        return when (variableName) {
+            "x" -> Variables(newVal, y, z)
+            "y" -> Variables(x, newVal, z)
+            "z" -> Variables(x, y, newVal)
             else -> throw Exception("Incorrect variable - $variableName")
         }
     }
 
     // Increases $variableName variable by one (command inc in algorithm)
-    fun increase(variableName: String) {
-        set(variableName, get(variableName) + 1)
-    }
+    fun increase(variableName: String) = set(variableName, get(variableName) + 1)
 
     // Decreases $variableName variable by one (command dec in algorithm)
-    fun decrease(variableName: String) {
-        set(variableName, max(get(variableName) - 1, 0))
-    }
+    fun decrease(variableName: String) = set(variableName, max(get(variableName) - 1, 0))
 }
 
-// Stores program state
-data class State(var counter: Int, var variables: Variables)
 
 // Stores one instruction (i.e. step / line) of algorithm
 sealed class Instruction {
@@ -48,15 +43,38 @@ sealed class Instruction {
     data class ZERO(val variableName: String, val whenTrue: Int, val whenFalse: Int) : Instruction()
 }
 
-// Runs algorithm on one initial value
-fun processQuery(initial: String, algorithm: List<Instruction>) {
-    println("For initial value $initial:")
-    if (initial.toIntOrNull() == null || initial.toInt() < 0) {
-        println("$initial is not a correct initial value, skipping")
-        return
+data class VariablesRange(val minValue: Variables = Variables(), val maxValue: Variables = Variables(), val initialized: Boolean = false) {
+
+    fun increase(variableName: String): VariablesRange {
+        require(initialized)
+        return VariablesRange(minValue.increase(variableName), maxValue.increase(variableName), true)
     }
+
+    fun decrease(variableName: String): VariablesRange {
+        require(initialized)
+        return VariablesRange(minValue.decrease(variableName), maxValue.increase(variableName), true)
+    }
+}
+
+fun variablesRangeUnion(a: VariablesRange, b: VariablesRange): VariablesRange {
+    if (!a.initialized)
+        return b
+    if (!b.initialized)
+        return a
+    val minValue = Variables(min(a.minValue.x, b.minValue.x), min(a.minValue.y, b.minValue.y), min(a.minValue.z, b.minValue.z))
+    val maxValue = Variables(max(a.maxValue.x, b.maxValue.x), max(a.maxValue.y, b.maxValue.y), max(a.maxValue.z, b.maxValue.z))
+    return VariablesRange(minValue, maxValue, true)
+}
+
+// Stores program state
+data class State(val instruction: Instruction, var variablesRange: VariablesRange)
+
+// Runs algorithm on one initial value
+fun processQuery(initial: Pair<Int, Int>, algorithm: List<Instruction>) {
+    println("For initial value ${initial.first}..${initial.second}:")
     try {
-        println("Result: ${runAlgorithm(algorithm, initial.toInt())}\n")
+        val (minVal, maxVal) = runAlgorithm(algorithm, initial.first, initial.second)
+        println("Result: ${minVal}..${maxVal}\n")
     } catch (e: Exception) {
         println("Run-time error: ${e.message}\n")
     }
@@ -70,5 +88,5 @@ fun main(args: Array <String>) {
     }
     val algorithm = readAlgorithm(files[0])
     printAlgorithm(algorithm)
-    files[1].readLines().filterNot {it == "" }.forEach { processQuery(it, algorithm) }
+    readQueries(files[1]).forEach { processQuery(it, algorithm) }
 }

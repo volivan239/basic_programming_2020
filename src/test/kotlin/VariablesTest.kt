@@ -17,8 +17,7 @@ internal class VariablesTest {
 
     @Test
     fun set() {
-        variables.set("x", 7)
-        assertEquals(7, variables.x)
+        assertEquals(7, variables.set("x", 7).x)
     }
 
     @Test
@@ -28,21 +27,20 @@ internal class VariablesTest {
 
     @Test
     fun increase() {
-        variables.increase("x")
-        assertEquals(3, variables.x)
+        assertEquals(3, variables.increase("x").x)
     }
 
     @Test
     fun decrease() {
-        variables.decrease("z")
-        assertEquals(8, variables.z)
+        assertEquals(8, variables.decrease("z").z)
     }
 
     @Test
     fun decreaseToZero() {
+        var localVar = variables
         for (i in 0..10) {
-            variables.decrease("y")
+            localVar = localVar.decrease("y")
         }
-        assertEquals(0, variables.y)
+        assertEquals(0, localVar.y)
     }
 }
